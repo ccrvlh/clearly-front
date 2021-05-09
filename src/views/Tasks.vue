@@ -1,12 +1,17 @@
 <template>
   <div class="tasks">
-    <h1>This is the tasks page</h1>
+    <TasksTable />
   </div>
 </template>
 
 <script>
+import TasksTable from '@/components/TasksTable.vue'
+
+
 export default {
-  
+  components: {
+    TasksTable
+  }
 }
 </script>
 
