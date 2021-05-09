@@ -22,6 +22,7 @@ export default {
     padding: 20px;
     text-align: left;
     padding-left: 5%;
+    font-weight: bolder;
 }
 
 

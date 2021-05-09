@@ -2,25 +2,28 @@
   <div class="tasks">
     <div>
         <el-card>
-            <el-row>
-                <el-col :span="4">Status</el-col>
-                <el-col :span="4">Name</el-col>
+            <el-row align="middle">
+                <el-col :span="3">Name</el-col>
+                <el-col :span="3">Status</el-col>
+                <el-col :span="3">Concurrency</el-col>
                 <el-col :span="3">Successful</el-col>
                 <el-col :span="3">Failed</el-col>
-                <el-col :span="3">Ratio</el-col>
-                <el-col :span="3">Ratio</el-col>
-                <el-col :span="4">Action</el-col>
+                <el-col :span="2">Running</el-col>
+                <el-col :span="2">Ratio</el-col>
+                <el-col :span="3">Queues</el-col>
+                <el-col :span="2">Action</el-col>
             </el-row>
         </el-card>
-    </div>    
-    <WorkerRow />
-    <WorkerRow />
-    <WorkerRow />
-    <WorkerRow />
-    <WorkerRow />
-    <WorkerRow />
-    <WorkerRow />
-    <WorkerRow />
+    </div>
+    <br>
+    <div style="margin-bottom: 10px"><WorkerRow /></div>
+    <div style="margin-bottom: 10px"><WorkerRow /></div>
+    <div style="margin-bottom: 10px"><WorkerRow /></div>
+    <div style="margin-bottom: 10px"><WorkerRow /></div>
+    <div style="margin-bottom: 10px"><WorkerRow /></div>
+    <div style="margin-bottom: 10px"><WorkerRow /></div>
+    <div style="margin-bottom: 10px"><WorkerRow /></div>
+    <div style="margin-bottom: 10px"><WorkerRow /></div>
   </div>
 </template>
 

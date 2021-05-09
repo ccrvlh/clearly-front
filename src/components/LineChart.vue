@@ -8,10 +8,13 @@
 
 <script>
 export default {
-    name: 'StaticTaskChart',
+    name: 'LineChart',
     data() {
       return {
         chartOptions: {
+    title: {
+        text: 'Tasks Performance'
+    },
           series: [{
               stack: 'normal',
               type: 'column',

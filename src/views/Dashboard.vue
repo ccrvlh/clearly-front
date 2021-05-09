@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <el-row>
+    <el-row :gutter="20">
         <el-col :span="6">
           <WorkersCard />
         </el-col>
@@ -14,12 +14,13 @@
           <WorkersCard />
         </el-col>
     </el-row>
-    <el-row>
+    <br>
+    <el-row :gutter="20">
       <el-col :span="12">
-        <StaticTaskChart/>
+        <PieChart/>
       </el-col>
       <el-col :span="12">
-        <StaticTaskChart/>
+        <LineChart/>
       </el-col>
     </el-row>
   </div>
@@ -27,13 +28,15 @@
 
 <script>
 import WorkersCard from '@/components/WorkersCard.vue'
-import StaticTaskChart from '@/components/StaticTaskChart.vue'
+import PieChart from '@/components/PieChart.vue'
+import LineChart from '@/components/LineChart.vue'
 
 export default {
   name: 'Home',
   components: {
     WorkersCard,
-    StaticTaskChart
+    PieChart,
+    LineChart
   }
 }
 </script>

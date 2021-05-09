@@ -1,18 +1,48 @@
 <template>
   <div class="topnav">
-      <ul>
-        <el-button @click="$router.push('/')">CLEARLY</el-button>
-        <el-button @click="$router.push('/')">Home</el-button>
-        <el-button @click="$router.push('tasks')">Tasks</el-button>
-        <el-button @click="$router.push('workers')">Workers</el-button>
-        <el-button @click="$router.push('brokers')">Brokers</el-button>
-      </ul>
+        <span class="menu__left">
+
+          <b style="margin-right: 40px; font-weight: 2000; color: white;">CLEARLY</b>
+
+          <router-link to="/">
+            <el-button>Home</el-button>
+          </router-link>
+
+          <router-link to="tasks">
+            <el-button>Tasks</el-button>
+          </router-link>
+
+          <router-link to="workers">
+            <el-button>Workers</el-button>
+          </router-link>
+
+          <router-link to="brokers">
+            <el-button>Brokers</el-button>
+          </router-link>
+      
+        </span>
+        <span class="menu__right">
+
+          <router-link to="settings">
+            <el-button>Settings</el-button>
+          </router-link>
+
+          <el-button @click='openLink("https://www.github.com")'>Docs</el-button>
+          <el-button @click='openLink("https://www.github.com")'>GitHub</el-button>
+      
+        </span>
+
   </div>
 </template>
 
 <script>
 export default {
-    name: 'Topbar'
+    name: 'Topbar',
+    methods: {
+      openLink(website) {
+        window.open(website)
+      }
+    }
 }
 </script>
 
@@ -24,7 +54,8 @@ export default {
   overflow: hidden;
 }
 
-ul {
+
+.menu__left {
   display: inline;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -33,6 +64,17 @@ ul {
   float: left;
   text-decoration: none;
 }
+
+.menu__right {
+  display: inline;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-right: 5%;
+  color: grey;
+  float: right;
+  text-decoration: none;
+}
+
 
 .el-button {
   font-family: 'Open Sans';

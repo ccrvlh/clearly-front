@@ -1,34 +1,42 @@
 <template>
     <div>
-<el-dialog
-  title="Tips"
-  :visible.sync="dialogVisible"
-  width="50%"
-  :before-close="handleClose">
-  <span>This is a message</span>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">Cancel</el-button>
-    <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
-  </span>
-</el-dialog>
+      <el-dialog
+        title="Tips"
+        :visible.sync="dialogVisible"
+        width="50%"
+        :before-close="handleClose"
+        :modalAppendToBody="false">
 
+        <TaskDetails />
+        
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+        </span>
+      </el-dialog>
+
+        <span style="float: left; margin-bottom: 10px">
+          <span style="padding: 5px;"><el-select placeholder="Workers" value="Filter workers..."></el-select></span>
+          <span style="padding: 5px;"><el-select placeholder="State" value="Filter status..."></el-select></span>
+          <span style="padding: 5px;"><el-select placeholder="Task Name" value="Filter name..."></el-select></span>
+        </span>
         <span style="float: right; margin-bottom: 10px">
-        <span style="padding: 5px;">    <el-date-picker
-      v-model="value2"
-      type="datetimerange"
-      :picker-options="pickerOptions"
-      range-separator="To"
-      start-placeholder="Start date"
-      end-placeholder="End date"
-      align="right">
-    </el-date-picker></span>
-        <span style="padding: 5px;"><el-select placeholder="Workers" value="a"></el-select></span>
-        <span style="padding: 5px;"><el-select placeholder="State" value="a"></el-select></span>
-        <span style="padding: 5px;"><el-select placeholder="Task Name" value="a"></el-select></span>
+          <span style="padding: 10px;">
+            Hide successful tasks<el-switch v-model="hideSuccess"></el-switch>
+          </span>
+          <span style="padding: 5px;">    <el-date-picker
+            v-model="value2"
+            type="datetimerange"
+            :picker-options="pickerOptions"
+            range-separator="To"
+            start-placeholder="Start date"
+            end-placeholder="End date"
+            align="right">
+          </el-date-picker></span>
         </span>
   <el-table
     ref="filterTable"
-    :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+    :data="tableData.filter(data => !search || data.state.toLowerCase().includes(search.toLowerCase()))"
     style="width: 100%">
     <el-table-column
     sortable
@@ -54,7 +62,7 @@
       label="State"
       prop="State">
       <template slot-scope="scope">
-        <el-tag size="medium">{{ scope.row.state }}</el-tag>   
+        <el-tag effect="dark" size="medium" @click='tracebackDialog = true' :type='scope.row.taskStatusType'>{{ scope.row.state }}</el-tag>   
       </template>
     </el-table-column>
     <el-table-column
@@ -111,10 +119,14 @@
 </template>
 
 <script>
+import TaskDetails from '@/components/TaskDetails'
+
   export default {
+    components: {TaskDetails},
     data() {
       return {
         dialogVisible: false,
+        taskStatusType: null,
         tableData: [{
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -123,8 +135,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Success',
+          result: 'None',
+          taskStatusType: 'success'
         }, {
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -133,8 +146,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Success',
+          result: 'None',
+          taskStatusType: 'success'
         }, {
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -143,8 +157,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Success',
+          result: 'None',
+          taskStatusType: 'success'
         }, {
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -153,8 +168,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Success',
+          result: 'None',
+          taskStatusType: 'success'
         }, {
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -163,8 +179,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Success',
+          result: 'None',
+          taskStatusType: 'success'
         }, {
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -173,8 +190,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Failed',
+          result: 'None',
+          taskStatusType: 'danger'
         }, {
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -183,8 +201,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Success',
+          result: 'None',
+          taskStatusType: 'success'
         }, {
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -193,8 +212,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Running',
+          result: 'None',
+          taskStatusType: 'info'
         }, {
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -203,8 +223,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Running',
+          result: 'None',
+          taskStatusType: 'info'
         }, {
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -213,8 +234,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Success',
+          result: 'None',
+          taskStatusType: 'success'
         }, {
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -223,8 +245,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Success',
+          result: 'None',
+          taskStatusType: 'success'
         }, {
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -233,8 +256,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Running',
+          result: 'None',
+          taskStatusType: 'info'
         }, {
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -243,8 +267,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Running',
+          result: 'None',
+          taskStatusType: 'info'
         }, {
           date: '18h23m20s Apr/04/20',
           worker: 'celery@aws-34239-sdn-93',
@@ -253,8 +278,9 @@
           finished: '2016-05-03',
           ellapsed: '2016-05-03',
           address: 'No. 189, Grove St, Los Angeles',
-          state: 'Finished',
-          result: 'None'
+          state: 'Running',
+          result: 'None',
+          taskStatusType: 'info'
         }],
         pickerOptions: {
           shortcuts: [{
@@ -285,7 +311,8 @@
         },
         search: '',
         value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-        value2: ''        
+        value2: '' ,
+        hideSuccess: null      
       }
     },
     methods: {
@@ -308,12 +335,7 @@
         console.log(index, row)
       },
       handleClose(done) {
-        this.$confirm('Are you sure to close this dialog?')
-          .then(e => {
-            console.log(e)
-            done();
-          })
-          .catch(e => console.log(e));
+        console.log(done)
       }
     }
   }
